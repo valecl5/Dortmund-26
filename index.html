@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dortmund, Colonia, Düsseldorf · 5–8 dicembre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: hero notturno a tutta larghezza, nav fissa, giorni come schede con timeline, ristoranti in griglia a 3 colonne su PC */
+  --bg: #eef0f3;
+  --surface: #ffffff;
+  --ink: #18202c;
+  --muted: #5b6575;
+  --line: #e1e4ea;
+  --night: #142033;
+  --accent: #b3302a;
+  --gold: #d9a441;
+  --dortmund: #c48f00;
+  --koeln: #b3302a;
+  --dues: #2860a8;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f141c; --surface: #18202b; --ink: #e9ecf1; --muted: #9aa4b3; --line: #273142;
+    --night: #0a0f17; --accent: #e3665d; --gold: #e6b65a; --dortmund: #e6b83a; --koeln: #e3665d; --dues: #6f9fe6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f141c; --surface: #18202b; --ink: #e9ecf1; --muted: #9aa4b3; --line: #273142;
+  --night: #0a0f17; --accent: #e3665d; --gold: #e6b65a; --dortmund: #e6b83a; --koeln: #e3665d; --dues: #6f9fe6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+a { color: var(--accent); }
+a:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+header.top { background: var(--night); color: #f3f1ea; padding: 56px 0 44px; position: relative; overflow: hidden; }
+header.top::after { content: ""; position: absolute; inset: auto 0 0 0; height: 6px;
+  background: linear-gradient(90deg, var(--dortmund) 0 33.3%, var(--koeln) 33.3% 66.6%, var(--dues) 66.6% 100%); }
+.kicker { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+h1 { font-size: clamp(36px, 5.5vw, 64px); font-weight: 800; margin: 10px 0 14px; letter-spacing: -.01em; }
+.lead { color: #c9cfda; margin: 0; max-width: 60ch; font-size: 19px; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.fact { border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: 6px 14px; font-size: 15px; font-weight: 600; color: #f3f1ea; }
+
+/* Nav */
+nav.chips { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav.chips .wrap { display: flex; gap: 8px; overflow-x: auto; padding-top: 12px; padding-bottom: 12px; scrollbar-width: none; }
+nav.chips a { flex: none; text-decoration: none; color: var(--ink); border-radius: 999px; padding: 7px 14px; font-size: 15px; font-weight: 600; white-space: nowrap; }
+nav.chips a:hover { background: var(--surface); }
+nav.chips a.on { background: var(--ink); color: var(--bg); }
+
+main { padding-bottom: 20px; }
+section { padding: 44px 0 0; }
+h2 { font-size: 32px; font-weight: 800; }
+h3 { font-size: 21px; font-weight: 700; margin: 30px 0 14px; display: flex; align-items: center; gap: 10px; }
+h3 .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--c); flex: none; }
+.sub { color: var(--muted); margin: 8px 0 22px; max-width: 70ch; }
+
+/* Panoramica */
+.overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.ov { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border-radius: 14px; padding: 18px 18px 20px; text-decoration: none; color: var(--ink); border-top: 5px solid var(--c); box-shadow: 0 1px 2px rgba(20,32,51,.06); transition: transform .15s; }
+.ov:hover { transform: translateY(-2px); }
+.ov .d { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+.ov b { font-family: var(--font-display); font-size: 22px; }
+.ov span { color: var(--muted); font-size: 15px; }
+
+.note { background: var(--surface); border-left: 4px solid var(--gold); border-radius: 10px; padding: 14px 18px; margin: 18px 0 0; }
+.note b { color: var(--ink); }
+
+/* Giorni */
+.day { background: var(--surface); border-radius: 18px; padding: 28px 32px 12px; margin-top: 44px; box-shadow: 0 1px 2px rgba(20,32,51,.06); border-top: 6px solid var(--c); }
+.day + .day { margin-top: 28px; }
+section.day { padding-top: 28px; }
+.day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.city { font-size: 14px; font-weight: 700; color: var(--c); text-transform: uppercase; letter-spacing: .1em; }
+.tl { list-style: none; margin: 0; padding: 0; }
+.tl > li { display: grid; grid-template-columns: 84px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.tl > li:last-child { border-bottom: 0; }
+.time { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; color: var(--c); font-size: 18px; }
+.tl h4 { margin: 0 0 6px; font-size: 19px; }
+.tl p { margin: 0 0 8px; max-width: 72ch; }
+.tl ul { margin: 6px 0 8px; padding-left: 20px; }
+.tl ul li { margin: 2px 0; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.pill { font-size: 13px; font-weight: 700; border-radius: 6px; padding: 3px 9px; background: color-mix(in srgb, var(--c) 13%, transparent); color: var(--ink); }
+.pill.cost { background: color-mix(in srgb, var(--gold) 24%, transparent); }
+.pill.warn { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+
+/* Ristoranti */
+.food { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.place { display: flex; flex-direction: column; background: var(--surface); border-radius: 14px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(20,32,51,.06); border-left: 4px solid var(--c); }
+.place h4 { font-size: 18px; }
+.place .addr { color: var(--muted); font-size: 14px; margin: 3px 0 8px; }
+.place p { margin: 0 0 12px; flex: 1; }
+.place a.map { font-size: 14px; font-weight: 700; text-decoration: none; color: var(--c); }
+.place a.map:hover { text-decoration: underline; }
+.tag { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--c); margin-bottom: 4px; }
+
+/* Tabelle */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; align-items: start; }
+.tablewrap { overflow-x: auto; background: var(--surface); border-radius: 14px; box-shadow: 0 1px 2px rgba(20,32,51,.06); }
+table { border-collapse: collapse; width: 100%; font-size: 16px; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.total td { font-weight: 700; border-bottom: 0; background: color-mix(in srgb, var(--gold) 14%, transparent); }
+.bullets { margin: 18px 0 0; padding-left: 20px; max-width: 75ch; }
+.bullets li { margin: 4px 0; }
+
+/* Checklist */
+.check { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 10px; }
+.check label { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border-radius: 12px; padding: 14px 16px; cursor: pointer; box-shadow: 0 1px 2px rgba(20,32,51,.06); }
+.check input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--accent); flex: none; }
+.check input:checked + span { text-decoration: line-through; color: var(--muted); }
+
+footer { color: var(--muted); font-size: 14px; padding: 48px 0 56px; }
+footer ul { padding-left: 18px; columns: 2; }
+@media (max-width: 640px) {
+  .day { padding: 20px 18px 6px; }
+  .tl > li { grid-template-columns: 64px 1fr; gap: 12px; }
+  footer ul { columns: 1; }
+}
+
+/* Alloggio */
+.stay { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: start; }
+.stay-main { background: var(--surface); border-radius: 14px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(20,32,51,.06); border-top: 5px solid var(--dortmund); }
+.stay-main .tag { display: block; }
+h3.stay-title { margin: 4px 0 4px; font-size: 26px; }
+.addr-big { color: var(--muted); margin: 0 0 12px; font-size: 17px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.btn { display: inline-block; text-decoration: none; font-weight: 700; font-size: 15px; padding: 9px 14px; border-radius: 10px; background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn:hover { opacity: .9; }
+.stay th { width: 40%; text-transform: none; letter-spacing: 0; font-size: 15px; color: var(--muted); font-weight: 600; }
+@media (max-width: 820px) { .stay { grid-template-columns: 1fr; } }
+
+/* Stampa / PDF */
+@page { size: A4; margin: 14mm 12mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { font-size: 12.5px; background: #fff; }
+  nav.chips { display: none; }
+  .wrap { max-width: none; padding: 0; }
+  header.top { padding: 26px 22px 24px; border-radius: 12px; }
+  h1 { font-size: 34px; }
+  .lead { font-size: 14px; }
+  section { padding-top: 22px; }
+  h2 { font-size: 22px; }
+  .day { box-shadow: none; border: 1px solid var(--line); border-top: 6px solid var(--c); padding: 18px 20px 6px; }
+  section.day { break-before: page; }
+  .tl > li, .place, .ov, .stay-main, .tablewrap, .note, .check label, tr { break-inside: avoid; }
+  .place, .ov, .tablewrap, .stay-main, .check label { box-shadow: none; border: 1px solid var(--line); }
+  .place { border-left: 4px solid var(--c); }
+  .ov { border-top: 5px solid var(--c); }
+  .stay-main { border-top: 5px solid var(--dortmund); }
+  .food { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .overview { grid-template-columns: repeat(4, 1fr); }
+  #mangiare, #trasporti { break-before: page; }
+  .stay { grid-template-columns: 1fr 1fr; }
+  .grid2 { grid-template-columns: 1fr 1fr; }
+  .check { grid-template-columns: 1fr 1fr; }
+  a { color: inherit; }
+  .place a.map, .btn, footer a, .tl a { color: var(--accent); }
+  .btn { background: transparent; color: var(--accent); border: 1px solid var(--accent); padding: 5px 10px; }
+  body { font-size: 11.5px; line-height: 1.45; }
+  .tl > li { padding: 8px 0; gap: 14px; grid-template-columns: 64px 1fr; }
+  .tl h4 { font-size: 14px; margin-bottom: 3px; }
+  .time { font-size: 14px; }
+  .tl p { margin-bottom: 4px; }
+  .day { padding: 14px 18px 4px; }
+  .pill { font-size: 10.5px; padding: 1px 7px; }
+  h2, h3, .day-head, .sub { break-after: avoid; }
+  #alloggio { break-before: avoid; }
+  footer { break-inside: avoid; padding: 16px 0 0; }
+  .place { padding: 10px 12px; }
+  .place h4 { font-size: 14px; }
+  .place p { margin-bottom: 6px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="kicker">Viaggio in famiglia · 6 adulti</div>
+    <h1>Dortmund, Colonia e Düsseldorf</h1>
+    <p class="lead">Quattro giorni di mercatini di Natale. Si dorme sempre a Dortmund e si va a Colonia e Düsseldorf in treno regionale.</p>
+    <div class="facts">
+      <span class="fact">5–8 dicembre 2026</span>
+      <span class="fact">Base: Dortmund</span>
+      <span class="fact">~0–6 °C, buio alle 16:30</span>
+    </div>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Sezioni">
+  <div class="wrap">
+    <a href="#panoramica">Panoramica</a>
+    <a href="#alloggio">Alloggio</a>
+    <a href="#sab-5">Sab 5</a>
+    <a href="#dom-6">Dom 6</a>
+    <a href="#lun-7">Lun 7</a>
+    <a href="#mar-8">Mar 8</a>
+    <a href="#mangiare">Dove mangiare</a>
+    <a href="#trasporti">Treni e costi</a>
+    <a href="#budget">Budget</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="panoramica">
+  <h2>Panoramica</h2>
+  <p class="sub">Colonia di domenica perché si va per il Duomo e i mercatini. Düsseldorf di lunedì per avere i negozi aperti. Il Museo del calcio il martedì perché il lunedì è chiuso.</p>
+  <div class="overview">
+    <a class="ov" href="#sab-5" style="--c: var(--dortmund)"><span class="d">Sab 5 dic</span><b>Dortmund</b><span>Arrivo, mercatino serale, cena westfaliana</span></a>
+    <a class="ov" href="#dom-6" style="--c: var(--koeln)"><span class="d">Dom 6 dic</span><b>Colonia</b><span>Duomo, mercatini, Brauhaus e Kölsch</span></a>
+    <a class="ov" href="#lun-7" style="--c: var(--dues)"><span class="d">Lun 7 dic</span><b>Düsseldorf</b><span>Kö, ramen, Altstadt, Rheinturm</span></a>
+    <a class="ov" href="#mar-8" style="--c: var(--dortmund)"><span class="d">Mar 8 dic</span><b>Dortmund</b><span>Museo del calcio, ultimo giro, partenza</span></a>
+  </div>
+  <div class="note">Mercatini aperti in tutte le vostre date: <b>Dortmund</b> 19/11–30/12, <b>Colonia</b> (Duomo) 16/11–23/12, <b>Düsseldorf</b> 19/11–30/12.</div>
+</section>
+
+<section id="alloggio">
+  <h2>Dove dormiamo</h2>
+  <p class="sub">Un appartamento a est del centro, a circa 20 minuti a piedi dalla stazione e dal mercatino.</p>
+  <div class="stay">
+    <div class="stay-main">
+      <span class="tag" style="--c: var(--dortmund)">Appartamento · 3 notti, 5–8 dicembre</span>
+      <h3 class="stay-title">City Wohnung Zentral 85-5</h3>
+      <p class="addr-big">Hamburger Straße 85, 44135 Dortmund</p>
+      <div class="pills" style="--c: var(--dortmund)">
+        <span class="pill">3 camere, 1 bagno</span>
+        <span class="pill">Valutazione 7,1/10 (52 recensioni)</span>
+        <span class="pill">Posizione 8,6/10</span>
+      </div>
+      <div class="links">
+        <a class="btn" href="https://de-nordrhein-westfalen.de/hotel/citywohnungzentral85">Scheda dell'alloggio</a>
+        <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Hamburger+Stra%C3%9Fe+85+44135+Dortmund">Apri in Maps</a>
+        <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&amp;origin=Hamburger+Stra%C3%9Fe+85+Dortmund&amp;destination=Dortmund+Hbf&amp;travelmode=walking">Percorso a piedi fino alla stazione</a>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><th>Check-in</th><td>dalle 15:00 alle 24:00</td></tr>
+          <tr><th>Check-out</th><td>entro le 12:00</td></tr>
+          <tr><th>Stazione (Hbf)</th><td>1,8 km · circa 22 min a piedi</td></tr>
+          <tr><th>Centro e mercatino</th><td>1,5 km · circa 18 min a piedi</td></tr>
+          <tr><th>Mezzi vicini</th><td>Fermate Berliner Straße e Brügmannplatz, stazione Dortmund-Körne West (circa 1 km)</td></tr>
+          <tr><th>Regole</th><td>Vietato fumare, niente animali</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note"><b>Da verificare con l'host:</b> la scheda è incoerente sulla capienza. Descrive tre camere, ma l'offerta base indica 2 ospiti e 18 m². Fatevi confermare per iscritto che ci sono 6 posti letto (3 × 2 letti singoli), e chiedete come funziona la consegna delle chiavi e se c'è parcheggio.</div>
+</section>
+
+<section id="sab-5" class="day" style="--c: var(--dortmund)">
+  <div class="day-head"><h2>Sabato 5 dicembre</h2><span class="city">Dortmund</span></div>
+  <ol class="tl">
+    <li><div class="time">Pom.</div><div>
+      <h4>Arrivo e check-in in Hamburger Straße 85</h4>
+      <p>Il check-in è dalle 15:00. Prima di cena fate la spesa per colazioni e acqua: con la cucina dell'appartamento risparmiate parecchio. Poi 18 minuti a piedi fino al centro.</p>
+      <div class="pills"><span class="pill warn">Domenica i supermercati sono chiusi</span></div>
+    </div></li>
+    <li><div class="time">17:00</div><div>
+      <h4>Weihnachtsstadt Dortmund</h4>
+      <p>Uno dei mercatini più grandi d'Europa, con oltre 250 bancarelle. Il sabato è aperto 11–22.</p>
+      <ul>
+        <li>L'albero di Natale gigante su <b>Hansaplatz</b>, il punto foto</li>
+        <li>Glühwein nella <b>tazza dell'anno</b>, souvenir da collezione</li>
+        <li><b>Westfälischer Grillschinken</b> nel panino, mandorle tostate</li>
+      </ul>
+      <div class="pills"><span class="pill">Ingresso libero</span></div>
+    </div></li>
+    <li><div class="time">20:00</div><div>
+      <h4>Cena westfaliana</h4>
+      <p>Al <b>Zum Alten Markt</b> o da <b>Hövels</b>: ordinate il <b>Pfefferpotthast</b>, lo spezzatino di manzo con pepe e cipolla simbolo della città. I dettagli sono in <a href="#mangiare">Dove mangiare</a>.</p>
+      <div class="pills"><span class="pill warn">Prenotate per 6</span><span class="pill cost">20–30 € a testa</span></div>
+    </div></li>
+  </ol>
+</section>
+
+<section id="dom-6" class="day" style="--c: var(--koeln)">
+  <div class="day-head"><h2>Domenica 6 dicembre</h2><span class="city">Colonia</span></div>
+  <ol class="tl">
+    <li><div class="time">8:45</div><div>
+      <h4>Treno per Colonia</h4>
+      <p>Uscite dall'appartamento verso le 8:15: sono circa 22 minuti a piedi fino a Dortmund Hbf. In alternativa attivate i 24hTicket NRW subito e prendete i mezzi, che sono inclusi. Poi un RE per Köln Hbf, circa 1h20. I biglietti valgono 24 ore dall'attivazione.</p>
+      <div class="pills"><span class="pill cost">99,60 € il gruppo · 16,60 € a testa</span></div>
+    </div></li>
+    <li><div class="time">10:15</div><div>
+      <h4>Duomo di Colonia</h4>
+      <p>Si esce dalla stazione e lo si ha davanti. Dal 1° luglio 2026 l'interno è a pagamento: compratelo online su <a href="https://www.koelner-dom.de">koelner-dom.de</a>. Durante le messe della domenica mattina la visita può essere limitata. Salita sulla torre facoltativa: 533 gradini, biglietto separato, 45–60 minuti.</p>
+      <div class="pills"><span class="pill cost">12 € (ridotto 6 €)</span><span class="pill warn">Biglietti online</span></div>
+    </div></li>
+    <li><div class="time">12:00</div><div>
+      <h4>Mercatino del Duomo</h4>
+      <p>Su Roncalliplatz, oltre 140 casette ai piedi della cattedrale. Il 6 dicembre c'è il programma speciale per San Nicola.</p>
+    </div></li>
+    <li><div class="time">12:45</div><div>
+      <h4>Pranzo in un Brauhaus</h4>
+      <p>Da <b>Früh am Dom</b> o da <b>Peters Brauhaus</b>. Il cameriere (il Köbes) vi porta bicchierini di Kölsch finché non mettete il sottobicchiere sopra il bicchiere. Da provare Himmel un Ääd, Sauerbraten e Halve Hahn.</p>
+      <div class="pills"><span class="pill warn">Prenotate o arrivate prima delle 12:30</span><span class="pill cost">18–28 € a testa</span></div>
+    </div></li>
+    <li><div class="time">14:00</div><div>
+      <h4>Altstadt</h4>
+      <p>Alter Markt e Heumarkt con il mercatino <i>Heinzels Wintermärchen</i>, poi la chiesa romanica di Groß St. Martin (ingresso libero).</p>
+    </div></li>
+    <li><div class="time">15:00</div><div>
+      <h4>Lungoreno e Museo del Cioccolato</h4>
+      <p>Circa 15 minuti a piedi lungo il fiume. Al museo serve un'ora, con la fontana di cioccolato alla fine. Se siete stanchi, basta il mercatino del porto lì accanto.</p>
+      <div class="pills"><span class="pill cost">19 € nel weekend</span><span class="pill">Facoltativo</span></div>
+    </div></li>
+    <li><div class="time">17:00</div><div>
+      <h4>Markt der Engel (Neumarkt)</h4>
+      <p>Il mercatino degli angeli, il più bello col buio, aperto fino alle 21. In alternativa il ponte di Hohenzollern illuminato, dietro il Duomo.</p>
+    </div></li>
+    <li><div class="time">19:00</div><div>
+      <h4>Cena o rientro</h4>
+      <p>Potete cenare a Colonia e arrivare a Dortmund verso le 21, oppure rientrare subito. Spuntino da mercatino: i <b>Reibekuchen</b>, frittelle di patate con composta di mele.</p>
+    </div></li>
+  </ol>
+</section>
+
+<section id="lun-7" class="day" style="--c: var(--dues)">
+  <div class="day-head"><h2>Lunedì 7 dicembre</h2><span class="city">Düsseldorf</span></div>
+  <ol class="tl">
+    <li><div class="time">9:15</div><div>
+      <h4>Treno per Düsseldorf</h4>
+      <p>Uscite verso le 8:45 per arrivare a piedi in stazione. I biglietti di domenica sono scaduti: attivate due nuovi 24hTicket, che coprono anche i mezzi per la stazione. Il RE per Düsseldorf Hbf ci mette circa un'ora.</p>
+      <div class="pills"><span class="pill cost">99,60 € il gruppo · 16,60 € a testa</span></div>
+    </div></li>
+    <li><div class="time">10:30</div><div>
+      <h4>Königsallee (Kö)</h4>
+      <p>Il viale elegante con il canale in mezzo. Nel 2026 c'è anche il nuovo <b>Winter Village</b> sulla Kö. Poco più in là, il Kö-Bogen con la facciata verde.</p>
+    </div></li>
+    <li><div class="time">12:15</div><div>
+      <h4>Ramen nel quartiere giapponese</h4>
+      <p>In Immermannstraße, a 10 minuti dalla stazione: da <b>Takumi</b> o <b>Naniwa</b>. Spesso c'è fila, ma scorre veloce.</p>
+      <div class="pills"><span class="pill cost">12–16 € a testa</span></div>
+    </div></li>
+    <li><div class="time">14:00</div><div>
+      <h4>Altstadt e mercatini</h4>
+      <p>Marktplatz davanti al municipio, Burgplatz, Schadowplatz. In Altstadt c'è la "Längste Theke der Welt", il bancone più lungo del mondo. Fermatevi per un <b>Altbier</b> da Zum Uerige.</p>
+      <div class="pills"><span class="pill">Souvenir: senape Löwensenf</span></div>
+    </div></li>
+    <li><div class="time">15:30</div><div>
+      <h4>Lungoreno</h4>
+      <p>La Rheinuferpromenade con la ruota panoramica <i>Wheel of Vision</i> e la pista di pattinaggio al Corneliusplatz.</p>
+    </div></li>
+    <li><div class="time">16:30</div><div>
+      <h4>Rheinturm e MedienHafen</h4>
+      <p>Salite sulla torre al tramonto: con il cielo limpido si vede fino al Duomo di Colonia. Ai piedi della torre, i palazzi di Gehry illuminati.</p>
+      <div class="pills"><span class="pill cost">~12,50 €</span><span class="pill">Aperto 10–24</span></div>
+    </div></li>
+    <li><div class="time">18:30</div><div>
+      <h4>Cena e rientro</h4>
+      <p>Cucina renana da <b>Schumacher</b> o <b>Zum Schiffchen</b>. Poi treno per Dortmund, circa un'ora.</p>
+      <div class="pills"><span class="pill warn">Prenotate</span><span class="pill cost">20–30 € a testa</span></div>
+    </div></li>
+  </ol>
+</section>
+
+<section id="mar-8" class="day" style="--c: var(--dortmund)">
+  <div class="day-head"><h2>Martedì 8 dicembre</h2><span class="city">Dortmund</span></div>
+  <ol class="tl">
+    <li><div class="time">Matt.</div><div>
+      <h4>Check-out e bagagli</h4>
+      <p>Il check-out è entro le 12:00, ma conviene lasciare l'appartamento verso le 9:30 e portare i bagagli in stazione: il museo è proprio davanti. Chiedete all'host se potete lasciare le valigie in appartamento, oppure cercate un deposito bagagli vicino all'Hbf.</p>
+    </div></li>
+    <li><div class="time">10:00</div><div>
+      <h4>Deutsches Fußballmuseum</h4>
+      <p>È davanti alla stazione. Fino al 6 gennaio 2027 c'è la mostra immersiva <i>SUPERHEROES</i> su Musiala e Wirtz. Per gruppi ci sono tariffe dedicate: chiedete in cassa. In alternativa, il Dortmunder U con la "U" luminosa sul tetto.</p>
+      <div class="pills"><span class="pill cost">12 € mostra · 25 € combinato</span><span class="pill">Chiuso il lunedì</span></div>
+    </div></li>
+    <li><div class="time">12:30</div><div>
+      <h4>Ultimo giro al mercatino e partenza</h4>
+      <p>Il martedì è aperto 11–21. Pranzate veloci alle bancarelle e comprate gli ultimi souvenir: decorazioni, Lebkuchen, la tazza del Glühwein.</p>
+    </div></li>
+  </ol>
+</section>
+
+<section id="mangiare">
+  <h2>Dove mangiare</h2>
+  <p class="sub">Locali tipici città per città. Il link apre Google Maps. Per le cene in 6 prenotate sempre.</p>
+
+  <h3 style="--c: var(--dortmund)"><span class="dot"></span>Dortmund · cucina westfaliana</h3>
+  <div class="food" style="--c: var(--dortmund)">
+    <div class="place"><span class="tag">Tradizionale</span><h4>Zum Alten Markt</h4><div class="addr">Markt 3 · dal 1956</div><p>Pfefferpotthast con senape di Schwerte, Salzkuchen (pane al cumino tipico di Dortmund), Thier Pils.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Zum+Alten+Markt+Dortmund">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Birrificio</span><h4>Hövels Hausbrauerei</h4><div class="addr">Hoher Wall 5</div><p>Birra fatta in casa e piatti abbondanti. Ottimo per gruppi.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=H%C3%B6vels+Hausbrauerei+Dortmund">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Birreria storica</span><h4>Wenkers am Markt</h4><div class="addr">Alter Markt</div><p>Birra Wenkers, arrosti e Schnitzel.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Wenkers+am+Markt+Dortmund">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Cucina casalinga</span><h4>Mit Schmackes</h4><div class="addr">Hohe Straße 61a</div><p>Cucina westfaliana "della nonna", aperto anche a pranzo.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Mit+Schmackes+Dortmund">Apri in Maps →</a></div>
+  </div>
+
+  <h3 style="--c: var(--koeln)"><span class="dot"></span>Colonia · Brauhaus e Kölsch</h3>
+  <div class="food" style="--c: var(--koeln)">
+    <div class="place"><span class="tag">Il classico</span><h4>Früh am Dom</h4><div class="addr">Am Hof 12–18 · 2 minuti dal Duomo</div><p>Himmel un Ääd, Haxe, Kölsch Früh.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Fr%C3%BCh+am+Dom+K%C3%B6ln">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Davanti alla stazione</span><h4>Gaffel am Dom</h4><div class="addr">Bahnhofsvorplatz 1</div><p>Sauerbraten e Schnitzel, comodissimo prima del treno.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Gaffel+am+Dom+K%C3%B6ln">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Altstadt</span><h4>Peters Brauhaus</h4><div class="addr">Mühlengasse 1</div><p>Sale storiche molto belle. Reibekuchen e piatti renani.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Peters+Brauhaus+K%C3%B6ln">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Altstadt</span><h4>Brauhaus Sion</h4><div class="addr">Unter Taschenmacher 5</div><p>Tradizionale: Haxe e Halve Hahn.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Brauhaus+Sion+K%C3%B6ln">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Meno turistico</span><h4>Brauerei zur Malzmühle</h4><div class="addr">Heumarkt 6</div><p>Birrificio di quartiere: Sauerbraten e birra Malzmühle.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Brauerei+zur+Malzm%C3%BChle+K%C3%B6ln">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Pausa dolce</span><h4>Café Reichard</h4><div class="addr">Unter Fettenhennen 11</div><p>Caffè storico con vista sul Duomo, per torta e caffè.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Caf%C3%A9+Reichard+K%C3%B6ln">Apri in Maps →</a></div>
+  </div>
+
+  <h3 style="--c: var(--dues)"><span class="dot"></span>Düsseldorf · Altbier e quartiere giapponese</h3>
+  <div class="food" style="--c: var(--dues)">
+    <div class="place"><span class="tag">Il più iconico</span><h4>Zum Uerige</h4><div class="addr">Berger Straße 1</div><p>Altbier Uerige, Mettbrötchen, Blutwurst.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Zum+Uerige+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Vivace</span><h4>Brauerei Füchschen</h4><div class="addr">Ratinger Straße 28</div><p>Schweinshaxe e Altbier.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Brauerei+F%C3%BCchschen+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Altstadt</span><h4>Zum Schlüssel</h4><div class="addr">Bolkerstraße 41–47</div><p>Sauerbraten e cozze alla renana, in stagione d'inverno.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Zum+Schl%C3%BCssel+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Il più antico</span><h4>Brauerei Schumacher</h4><div class="addr">Oststraße 123 · vicino alla Kö</div><p>Cucina renana, ottima per una cena tranquilla.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Brauerei+Schumacher+Oststra%C3%9Fe+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Storico</span><h4>Zum Schiffchen</h4><div class="addr">Hafenstraße 5</div><p>Locale d'epoca dove mangiò Napoleone, piatti tradizionali.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Zum+Schiffchen+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Pranzo veloce</span><h4>Takumi</h4><div class="addr">Immermannstraße 28</div><p>Ramen tonkotsu o miso.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Takumi+Ramen+Immermannstra%C3%9Fe+D%C3%BCsseldorf">Apri in Maps →</a></div>
+    <div class="place"><span class="tag">Pranzo veloce</span><h4>Naniwa Noodles &amp; Soups</h4><div class="addr">Oststraße 55</div><p>Ramen e udon, la fila scorre veloce.</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Naniwa+Noodles+D%C3%BCsseldorf">Apri in Maps →</a></div>
+  </div>
+
+  <h3>Veloce ed economico ovunque (5–12 €)</h3>
+  <div class="note">
+    Currywurst con patatine, Bratwurst o Grillschinken nel panino, Reibekuchen (soprattutto a Colonia) e Brezel delle panetterie. Ai mercatini il Glühwein si paga con una <b>cauzione sulla tazza</b> (Pfand): restituitela o tenetela come ricordo. Portate <b>contanti</b>. La mancia è del 5–10%: ditelo al cameriere quando pagate.
+  </div>
+  <div class="note">A Colonia si beve <b>Kölsch</b>, a Düsseldorf <b>Altbier</b>: chiedere la birra dell'altra città è la classica gaffe.</div>
+</section>
+
+<section id="trasporti">
+  <h2>Treni e costi</h2>
+  <p class="sub">Per 6 persone conviene un biglietto da 5 persone più un singolo. Due biglietti separati da 3 costerebbero 119,60 €.</p>
+  <div class="grid2">
+  <div class="tablewrap"><table>
+    <thead><tr><th>Biglietto</th><th>Copre</th><th class="n">Prezzo</th></tr></thead>
+    <tbody>
+      <tr><td>24hTicket NRW 5 Personen</td><td>5 persone, 24 ore</td><td class="n">59,80 €</td></tr>
+      <tr><td>24hTicket NRW Single</td><td>1 persona, 24 ore</td><td class="n">39,80 €</td></tr>
+      <tr class="total"><td>Al giorno, per 6</td><td>16,60 € a testa</td><td class="n">99,60 €</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tratta</th><th>Treni</th><th class="n">Durata</th></tr></thead>
+    <tbody>
+      <tr><td>Dortmund → Köln Hbf</td><td>RE1, RE6 e altri</td><td class="n">~1h15–1h30</td></tr>
+      <tr><td>Dortmund → Düsseldorf Hbf</td><td>RE1, RE6, RE11</td><td class="n">~55–65 min</td></tr>
+    </tbody>
+  </table></div>
+  </div>
+  <ul class="bullets">
+    <li>Vale <b>24 ore dalla prima convalida</b>, solo in 2ª classe, su tutti i regionali (RE, RB, S-Bahn) <b>e su tram, U-Bahn e bus</b> delle città.</li>
+    <li>Non vale su ICE e IC. È nominativo: tenete un documento con voi.</li>
+    <li>Si compra su DB Navigator o bahn.de. Alla macchinetta costa un po' di più.</li>
+  </ul>
+  <div class="note">La sera prima controllate su DB Navigator gli orari e gli eventuali lavori sulla linea. L'appartamento è a circa 20 minuti a piedi da centro e stazione. Domenica e lunedì i 24hTicket NRW coprono anche i mezzi urbani di Dortmund. Sabato e martedì si va a piedi, oppure si usa un 24-StundenTicket VRR: verificate il prezzo aggiornato sull'app DSW21.</div>
+</section>
+
+<section id="budget">
+  <h2>Budget a persona</h2>
+  <p class="sub">Gli ingressi sono quelli pubblicati per il 2026, i pasti sono stime.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Voce</th><th class="n">Costo</th></tr></thead>
+    <tbody>
+      <tr><td>Appartamento (3 notti, da 48 € a notte secondo la scheda)</td><td class="n">da verificare</td></tr>
+      <tr><td>Treni per Colonia e Düsseldorf (2 giorni)</td><td class="n">~33 €</td></tr>
+      <tr><td>Duomo di Colonia, interno</td><td class="n">12 €</td></tr>
+      <tr><td>Museo del Cioccolato (facoltativo)</td><td class="n">19 €</td></tr>
+      <tr><td>Rheinturm</td><td class="n">~12,50 €</td></tr>
+      <tr><td>Fußballmuseum</td><td class="n">12–25 €</td></tr>
+      <tr><td>Pasti veloci (4–5)</td><td class="n">40–50 €</td></tr>
+      <tr><td>Cene in Brauhaus (3)</td><td class="n">60–90 €</td></tr>
+      <tr><td>Glühwein e golosità</td><td class="n">20–30 €</td></tr>
+      <tr class="total"><td>Totale indicativo, alloggio escluso</td><td class="n">~210–270 €</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="checklist">
+  <h2>Checklist</h2>
+  <p class="sub">Nella pagina web le spunte restano salvate in questo browser.</p>
+  <ul class="check">
+    <li><label><input type="checkbox" id="c0"><span>Farsi confermare dall'host 6 posti letto, consegna chiavi e deposito bagagli</span></label></li>
+    <li><label><input type="checkbox" id="c1"><span>Prenotare 2–3 cene per 6 persone, soprattutto sabato e domenica</span></label></li>
+    <li><label><input type="checkbox" id="c2"><span>Comprare online i biglietti del Duomo di Colonia per domenica</span></label></li>
+    <li><label><input type="checkbox" id="c3"><span>Installare DB Navigator e comprare i 24hTicket la mattina stessa</span></label></li>
+    <li><label><input type="checkbox" id="c4"><span>Spesa sabato pomeriggio: la domenica i supermercati sono chiusi</span></label></li>
+    <li><label><input type="checkbox" id="c5"><span>Portare contanti e scarpe comode</span></label></li>
+    <li><label><input type="checkbox" id="c6"><span>Vestiti caldi: 0–6 °C, buio dalle 16:30</span></label></li>
+  </ul>
+</section>
+
+<footer>
+  Fonti, consultate a novembre 2026:
+  <ul>
+    <li><a href="https://www.dortmund.de/dortmund-erleben/veranstaltungskalender/termin_129477.html">Stadt Dortmund, Weihnachtsstadt 2026</a></li>
+    <li><a href="https://www.visitduesseldorf.de/erleben/veranstaltungen/Weihnachtsmarkt">Visit Düsseldorf, Weihnachtsmarkt</a></li>
+    <li><a href="https://koeln.de/tourismus/sehenswertes/koelner-dom">koeln.de, Duomo di Colonia</a></li>
+    <li><a href="https://www.bahn.de/angebot/regio/laender-tickets/schoener-tag-ticket-nrw">DB, 24hTicket NRW</a></li>
+    <li><a href="https://www.dortmund.de/dortmund-erleben/veranstaltungskalender/termin_129037.html">Deutsches Fußballmuseum, SUPERHEROES</a></li>
+    <li><a href="https://rheinturm.de/en">Rheinturm Düsseldorf</a></li>
+    <li><a href="https://de-nordrhein-westfalen.de/hotel/citywohnungzentral85">City Wohnung Zentral 85-5, scheda alloggio</a></li>
+  </ul>
+</footer>
+</main>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('.check input');
+  var store = null;
+  try { store = window.localStorage; store.getItem('x'); } catch (e) { store = null; }
+  boxes.forEach(function (b) {
+    try { if (store && store.getItem('dtm-' + b.id) === '1') b.checked = true; } catch (e) {}
+    b.addEventListener('change', function () {
+      try { if (store) store.setItem('dtm-' + b.id, b.checked ? '1' : '0'); } catch (e) {}
+    });
+  });
+  var links = document.querySelectorAll('nav.chips a');
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('on'); });
+          var a = map[en.target.id];
+          if (a) { a.classList.add('on'); var bar = a.parentNode; bar.scrollLeft = a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2; }
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
